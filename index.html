@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+		<script>
+		const BOX=30;
+		const SIZ=20;
+		const FPS=200;
+		var klocek;
+		var snake=[];
+		var food=[];
+		var x=3;
+		var y=5;
+		var los;
+		var fail=true;
+		var wartosc;
+		var wartfood;
+		var glowa=[];
+		var bezglowy=[];
+		var klawisz;
+		var goodKlawisz;
+		</script>
+		<link rel="stylesheet" type="text/css" href="styl.css">
+    </head>
+    <body>
+        <div id="contener"></div>
+        <script>
+		//keypress
+		document.addEventListener('keypress', klawisz);
+		function klawisz(event){
+		klawisz = event.keyCode;
+		}
+        //Stworzenie siatki o ustawionych rozmiarach
+        document.getElementById("contener").style.width=((BOX+2)*SIZ)+"px";
+        document.getElementById("contener").style.height=((BOX+2)*SIZ)+"px";
+        document.getElementById("contener").style.width=((BOX+2)*SIZ)+"px";
+        document.getElementById("contener").style.height=((BOX+2)*SIZ)+"px";
+        for(i=0;i<SIZ*SIZ;i++){
+            klocek=document.createElement("div");
+            klocek.setAttribute("class","blank");
+            klocek.style.width=BOX+"px";
+            klocek.style.height=BOX+"px";
+            document.getElementById("contener").appendChild(klocek);
+        }
+			//void start xD
+			snake.push([x-2,y]);snake.push([x-1,y]);snake.push([x,y]);
+			food.push(x+3+Math.floor(Math.random() * SIZ-x-2),y+Math.floor(Math.random() * SIZ-y));
+			wartosc=y*SIZ+x;
+			goodKlawisz=100;
+			wartfood=food[1]*SIZ+food[0];
+			//document.getElementsByClassName("blank")[wartosc].setAttribute("class","kloc");
+			document.getElementsByClassName("blank")[wartfood].setAttribute("class","food");
+			
+			//void update kinda xD
+        
+         	var gowno = setInterval("chleb()",FPS);
+			
+			function chleb(){
+	
+						
+			//inputy wdsa
+			if(klawisz==119){
+			goodKlawisz=klawisz;
+			}
+			if(klawisz==100){
+			goodKlawisz=klawisz;
+			}
+			if(klawisz==115){
+			goodKlawisz=klawisz;
+			}
+			if(klawisz==97){
+			goodKlawisz=klawisz;
+			}
+			//goodKlawisze xDDD
+			if(goodKlawisz==119){
+			snake.push([snake[snake.length-1][0],snake[snake.length-1][1]-1]);
+			}
+			if(goodKlawisz==100){			
+			snake.push([snake[snake.length-1][0]+1,snake[snake.length-1][1]]);
+			}
+			if(goodKlawisz==115){
+			snake.push([snake[snake.length-1][0],snake[snake.length-1][1]+1]);
+			}
+			if(goodKlawisz==97){
+			snake.push([snake[snake.length-1][0]-1,snake[snake.length-1][1]]);
+			}
+			//nie wiem gdzie dac
+			bezglowy=[...snake];
+			glowa=bezglowy.pop();	
+			//koniec gry
+			if(snake[snake.length-1][0]<0||snake[snake.length-1][0]>=SIZ||snake[snake.length-1][1]<0||snake[snake.length-1][1]>=SIZ||bezglowy.some(a => glowa.every((v, i) => v === a[i])))
+			{
+			clearInterval(gowno);
+			document.write("koniec gry");
+			}
+			//zjedzenie
+			if(snake[snake.length-1][0]==food[0]&&snake[snake.length-1][1]==food[1]){
+			food=[];
+				while(food.length==0){
+				food[0]=Math.floor(Math.random() * SIZ);
+				food[1]=Math.floor(Math.random() * SIZ);
+				if(snake.some(a => food.every((v, i) => v === a[i]))){
+				food=[];
+				continue;
+				}
+				wartosc=food[1]*SIZ+food[0];
+				document.getElementsByTagName("div")[wartosc+1].setAttribute("class","food");
+				}
+			}
+			else{
+			ogon=snake.shift();
+			}
+			//narysowanie
+			wartosc=snake[snake.length-1][1]*SIZ+snake[snake.length-1][0];
+			document.getElementsByTagName("div")[wartosc+1].setAttribute("class","kloc");
+			wartosc=ogon[1]*SIZ+ogon[0];
+			document.getElementsByTagName("div")[wartosc+1].setAttribute("class","blank");
+		    }
+
+        </script>
+    </body>
+    
+</html>

@@ -1,0 +1,20 @@
+#contener{
+    border:1px solid black;
+    margin:auto;
+}
+
+.kloc{
+    background-color:white;
+    border:1px solid black;
+    float:left;
+}
+.food{
+    background-color:red;
+    border:1px solid black;
+    float:left;
+}
+.blank{
+    background-color:#ff2255;
+    border:1px solid black;
+    float:left;
+}
